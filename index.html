@@ -497,14 +497,22 @@
           : 0;
       const R = (a, b) => Math.random() * (b - a) + a;
       const $ = (id) => document.getElementById(id);
-      const music = $("bgMusic");
+     
+const music = $("bgMusic");
 music.volume = 0.5;
 
-window.addEventListener("load", () => {
-  music.play().catch(() => {
-    console.log("Trình duyệt đã chặn tự phát nhạc.");
+function startMusic() {
+  music.play().catch((err) => {
+    console.log("Chưa phát được nhạc:", err);
   });
-});
+}
+
+// Thử phát ngay khi mở trang
+window.addEventListener("load", startMusic);
+
+// Nếu trình duyệt chặn, thử phát khi người dùng chạm hoặc nhấp lần đầu
+document.addEventListener("pointerdown", startMusic, { once: true });
+
 
       for (let i = 0; i < 60; i++) {
         const s = document.createElement("div");
